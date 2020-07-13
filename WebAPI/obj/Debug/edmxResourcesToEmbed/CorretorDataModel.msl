@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CorretorDBModelStoreContainer" CdmEntityContainer="CorretorDBEntities">
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="CorretorDBModel.Log">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="logsId" ColumnName="logsId" />
+          <ScalarProperty Name="logsMessage" ColumnName="logsMessage" />
+          <ScalarProperty Name="logsPath" ColumnName="logsPath" />
+          <ScalarProperty Name="logsData" ColumnName="logsData" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="CorretorDBModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+          <ScalarProperty Name="userAddress" ColumnName="userAddress" />
+          <ScalarProperty Name="userPhone" ColumnName="userPhone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

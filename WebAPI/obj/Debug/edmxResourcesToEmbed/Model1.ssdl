@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CorretorDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Itens">
+    <Key>
+      <PropertyRef Name="itemId" />
+    </Key>
+    <Property Name="itemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="itemName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="itemPrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="itemAmount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="FK_UserId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="logsId" />
+    </Key>
+    <Property Name="logsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="logsMessage" Type="varchar(max)" />
+    <Property Name="logsPath" Type="varchar(max)" />
+    <Property Name="logsData" Type="date" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="userEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="userAddress" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="userPhone" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_itemIdUserbuy">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Itens" Type="Self.Itens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Itens">
+        <PropertyRef Name="FK_UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CorretorDBModelStoreContainer">
+    <EntitySet Name="Itens" EntityType="Self.Itens" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_itemIdUserbuy" Association="Self.FK_itemIdUserbuy">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Itens" EntitySet="Itens" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
