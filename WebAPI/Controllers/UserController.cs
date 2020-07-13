@@ -1,15 +1,24 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebAPI;
+using WebAPI.Logs;
 
 namespace WebAPI.Controllers
 {
     public class UserController : ApiController
     {
+        private readonly ILogger _logger;
+        public UserController(
+            ILogger logger
+            )
+        {
+            _logger = logger;
+        }
         public IEnumerable<User> Get()
         {
             using (CorretorDBEntities entities = new CorretorDBEntities())
@@ -52,6 +61,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Error(ex, "TEMOS UM ERRO");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
@@ -78,6 +88,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             }
         }
@@ -106,6 +117,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
+                
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
