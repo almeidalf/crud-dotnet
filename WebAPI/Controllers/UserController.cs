@@ -1,25 +1,21 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WebAPI;
-using WebAPI.Logs;
 
 namespace WebAPI.Controllers
 {
+    [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
-        private readonly ILogger _logger;
-        public UserController(
-            ILogger logger
-            )
+        public UserController()
         {
-            _logger = logger;
         }
-        public IEnumerable<User> Get()
+
+        [HttpGet]
+        public IEnumerable<User> CarregarListaDeUsuarios()
         {
             using (CorretorDBEntities entities = new CorretorDBEntities())
             {
@@ -27,7 +23,9 @@ namespace WebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage Get(int id)
+        [HttpGet]
+        [Route("{id}")]
+        public HttpResponseMessage UsuarioPorID(int id)
         {
             using (CorretorDBEntities entities = new CorretorDBEntities())
             {
@@ -44,7 +42,8 @@ namespace WebAPI.Controllers
             }
         }
 
-        public HttpResponseMessage Post([FromBody] User user)
+        [HttpPost]
+        public HttpResponseMessage AdicionarUsuario([FromBody] User user)
         {
             try
             {
@@ -61,12 +60,13 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error(ex, "TEMOS UM ERRO");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
-        public HttpResponseMessage Delete(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public HttpResponseMessage DeletarUsuario(int id)
         {
             try
             {
@@ -88,23 +88,25 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
-        public HttpResponseMessage Put(int id, User user)
+        [HttpPut]
+        public HttpResponseMessage EditarUsuario(int id, User user)
         {
             try
             {
                 using (CorretorDBEntities entities = new CorretorDBEntities())
                 {
                     var entity = entities.Users.FirstOrDefault(x => x.userId == id);
-                       
-                    if(entity == null)
+
+                    if (entity == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Usuário com ID: " + id.ToString() + "não existe!");
-                    } else
+                    }
+                    else
                     {
 
                         entity.userName = user.userName;
@@ -117,7 +119,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }

@@ -16,8 +16,7 @@ namespace WebAPI.Logs
         [Obsolete]
         static Logger()
         {
-
-            var connStr = "";
+            var connStr = "Server=DESKTOP-HJHKJJL;Database=CorretorDB;Trusted_Connection=True;";
 
             var tableName = "Serilog";
             var columnOpts = new ColumnOptions();
