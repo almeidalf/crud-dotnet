@@ -9,11 +9,13 @@
 
 namespace WebAPI
 {
+    using Serilog.Core;
     using System;
     using System.Collections.Generic;
     
     public partial class Log
     {
+        public static Logger Logger { get; internal set; }
         public int logsId { get; set; }
         public string logsMessage { get; set; }
         public string logsPath { get; set; }

@@ -5,13 +5,16 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
+
 namespace WebAPI.Controllers
 {
     [RoutePrefix("api/user")]
     public class UserController : ApiController
     {
-        public UserController()
+        public UserController(
+            )
         {
+
         }
 
         [HttpGet]
@@ -55,11 +58,14 @@ namespace WebAPI.Controllers
                     var message = Request.CreateResponse(HttpStatusCode.Created, user);
 
                     message.Headers.Location = new Uri(Request.RequestUri + user.userId.ToString());
+                    Log.Logger.Information("Novo Usuário Cadastrado: {Nome:l} {UserEmail:l}",
+                     user.userName, user.userEmail) ;
                     return message;
                 }
             }
             catch (Exception ex)
             {
+                Log.Logger.Warning(ex,"TESTE SERILOG USER EX");
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
@@ -88,7 +94,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception ex)
             {
-
+        
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             }
         }
